@@ -8,10 +8,10 @@ entity.add_component TGE::Pixel.new "@"
 game.add_game_object entity
 
 
-# entity2 = TGE::Entity.new "tree"
-# entity2.add_component TGE::Position.new 23,5
-# entity2.add_component TGE::Texture.new "T"
-# game.add_game_object entity2
+entity2 = TGE::Entity.new "tree"
+entity2.add_component TGE::Position.new 23,5
+entity2.add_component TGE::Pixel.new "T"
+game.add_game_object entity2
 
 game.loop do
         case TGE::Input.key_pressed

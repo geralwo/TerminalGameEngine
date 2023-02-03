@@ -29,7 +29,9 @@ module TGE
         def self.loop &block
                 begin
                         system('stty raw -echo')
+                        $Screen.disable_cursor
                         while not @quit_game
+                                $Screen.clear_screen
                                 Input.collect_input
                                 exit if Input.key_pressed == "Q"
                                 block.call
@@ -41,6 +43,8 @@ module TGE
                                 sleep 1.0 / $FPS
                         end
                 ensure
+                        $Screen.enable_cursor
+                        print "\e[0;0\e[2K\e[2J"
                         system('stty -raw echo')
                 end
         end

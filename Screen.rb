@@ -10,7 +10,19 @@ module TGE
                 def initialize width = TGE::Width, height = TGE::Height
                         @Width = width
                         @Height = height
-                        @ScreenPixels = {}
+                        
+                end
+
+                def clear_screen
+                        print "\033[2J"
+                end
+                
+                def disable_cursor
+                        print "\x1B[?25l"
+                end
+                
+                def enable_cursor
+                        print "\x1B[?25h"
                 end
 
                 def draw_pixel x,y,p
@@ -18,17 +30,17 @@ module TGE
                 end
 
                 def update entities
-                        # system 'clear' # bad
+                        screenPixels = Hash.new { |hash,key| hash[key] = TGE::Pixel.new "█"}
                         entities.each do |ent|
                                 pos = Vector::Vector2.new ent[:Position].x, ent[:Position].y
-                                @ScreenPixels[pos] = ent[:Pixel]
-                                @ScreenPixels[pos].needs_update = true
+                                screenPixels[pos] = ent[:Pixel]
+                                screenPixels[pos].needs_update = true
                         end
-                        @ScreenPixels.each { |k,v|
-                                # if v.needs_update
+                        screenPixels.each { |k,v|
+                                if v.needs_update
                                         self.draw_pixel k.x,k.y, v.char
-                                        # v.needs_update = false
-                                # end
+                                        v.needs_update = false
+                                end
                         }
                 end
         end
