@@ -7,15 +7,10 @@ module TGE
                 attr_reader :Width, :Height
                 attr_accessor :ScreenPixels
 
-                def initialize
-                        @Width = TGE::Width
-                        @Height = TGE::Height
+                def initialize width = TGE::Width, height = TGE::Height
+                        @Width = width
+                        @Height = height
                         @ScreenPixels = {}
-                        @Width.times do |x|
-                                @Height.times do |y|
-                                        @ScreenPixels[vec2 x,y] = TGE::Pixel.new "#"
-                                end
-                        end
                 end
 
                 def draw_pixel x,y,p
@@ -23,15 +18,17 @@ module TGE
                 end
 
                 def update entities
+                        # system 'clear' # bad
                         entities.each do |ent|
-                                @ScreenPixels[vec2 ent[:Position].x, ent[:Position].y] = ent[:Pixel]
-                                @ScreenPixels[vec2 ent[:Position].x, ent[:Position].y].needs_update = true
+                                pos = Vector::Vector2.new ent[:Position].x, ent[:Position].y
+                                @ScreenPixels[pos] = ent[:Pixel]
+                                @ScreenPixels[pos].needs_update = true
                         end
                         @ScreenPixels.each { |k,v|
-                                if v.needs_update
+                                # if v.needs_update
                                         self.draw_pixel k.x,k.y, v.char
-                                        v.needs_update = false
-                                end
+                                        # v.needs_update = false
+                                # end
                         }
                 end
         end

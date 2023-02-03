@@ -2,6 +2,7 @@ module TGE
         class Pixel < Component
                 attr_accessor :needs_update, :char, :fg, :bg
                 def initialize char, fg = nil, bg = nil
+                        super self.class.name
                         @char = char
                         @fg = fg
                         @bg = bg

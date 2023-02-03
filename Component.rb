@@ -6,11 +6,11 @@ module TGE
                 end
 
                 def update
-                        warn "update not implemented #{self}"
+                        warn "update() not implemented for #{self}"
                 end
 
                 def on_ready
-                        warn "on_ready not implemented #{self}"
+                        warn "on_ready() not implemented for #{self}"
                 end
         end
 end
