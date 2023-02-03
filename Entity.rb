@@ -15,7 +15,7 @@ module TGE
                         @components[key]
                 end
 
-                def has? key
+                def has_component? key
                         return @components[key] if @components[key] != nil
                 end
 
@@ -27,7 +27,7 @@ module TGE
                 end
 
                 def draw
-                        return @components[:texture]
+                        return @components[:Pixel]
                 end
 
                 def on_ready

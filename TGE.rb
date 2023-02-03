@@ -1,17 +1,22 @@
 module TGE
-require_relative 'Entity'
-require_relative 'Component'
-Dir[File.join(__dir__, 'components', '*.rb')].each { |file| require file }
-require_relative 'Screen'
-require_relative 'Input'
-require_relative 'Physics'
-require 'io/console'
+        require_relative 'Vector'
+        require_relative 'Entity'
+        require_relative 'Component'
+        Dir[File.join(__dir__, 'components', '*.rb')].each { |file| require file }
+        require_relative 'Screen'
+        require_relative 'Input'
+        require_relative 'Physics'
+        require_relative 'Log'
+        require 'io/console'
+
         $Entities = []
+        $DEBUG = false
         @quit_game = false
         $Tick = 0
-        $FPS = 144
+        $FPS = 60
         Input = TGE::Input.new
         Physics = TGE::Physics.new
+        $Logger = TGE::Log.new
         Width = `tput cols`.to_i
         Height = `tput lines`.to_i
 
@@ -28,11 +33,10 @@ require 'io/console'
                                 Input.collect_input
                                 exit if Input.key_pressed == "Q"
                                 block.call
-                                Physics.step $Entities
                                 $Entities.each do |entity|
                                         entity.update
-                                        $Screen.draw_pixel entity[:pos].x, entity[:pos].y, entity[:texture].texture
                                 end
+                                $Screen.update $Entities.select { |ent| ent.has_component? :Pixel}
                                 $Tick = $Tick + 1
                                 sleep 1.0 / $FPS
                         end

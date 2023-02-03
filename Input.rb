@@ -55,16 +55,17 @@ module TGE
                         121 => 'y',
                         122 => 'z',
                 }
-                attr_reader :key_pressed, :key_code
+                attr_reader :key_pressed, :key_event
                 def initialize
                         @key_code = nil
                         @key_pressed = nil
+                        @last_key_pressed = @key_pressed
                 end
 
                 def collect_input
-                        @key_pressed = nil
-                        @key_code = (STDIN.read_nonblock(1).ord rescue nil) #unless nil
-                        @key_pressed = KEYCODES[@key_code] unless @key_code == nil
+                        @last_key_pressed = @key_pressed unless @key_pressed == nil
+                        @key_event = (STDIN.read_nonblock(1).ord rescue nil)
+                        @key_pressed = KEYCODES[@key_event]
                 end
         end
 end

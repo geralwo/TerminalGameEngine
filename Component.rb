@@ -1,17 +1,16 @@
 module TGE
         class Component
-                attr_reader :name, :type
-                def initialize name, type
-                        @name = name
-                        @type = type
+                attr_reader :name
+                def initialize name
+                        @name = name.split('::').last.to_sym
                 end
 
                 def update
-                        warn "update not implemented #{self}" if $DEBUG == true
+                        warn "update not implemented #{self}"
                 end
 
                 def on_ready
-                        warn "on_ready not implemented #{self}" if $DEBUG == true
+                        warn "on_ready not implemented #{self}"
                 end
         end
 end

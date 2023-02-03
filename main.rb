@@ -4,25 +4,26 @@ game = TGE.new
 
 entity = TGE::Entity.new "player"
 entity.add_component TGE::Position.new 0,0
-entity.add_component TGE::Texture.new "@"
-entity.add_component TGE::Collider.new :box, 1
+entity.add_component TGE::Pixel.new "@"
 game.add_game_object entity
 
 
-entity2 = TGE::Entity.new "tree"
-entity2.add_component TGE::Position.new 23,5
-entity2.add_component TGE::Texture.new "T"
-game.add_game_object entity2
+# entity2 = TGE::Entity.new "tree"
+# entity2.add_component TGE::Position.new 23,5
+# entity2.add_component TGE::Texture.new "T"
+# game.add_game_object entity2
 
 game.loop do
         case TGE::Input.key_pressed
         when "w"
-                entity[:pos].y -= 1 unless entity[:pos].y == 0
+                entity[:Position].y -= 1 unless entity[:Position].y == 0
+                
         when "s"
-                entity[:pos].y += 1 unless entity[:pos].y > TGE::Height
+                entity[:Position].y += 1 unless entity[:Position].y > TGE::Height
         when "a"
-                entity[:pos].x -= 1 unless entity[:pos].x == 0
+                entity[:Position].x -= 1 unless entity[:Position].x == 0
         when "d"
-                entity[:pos].x += 1 unless entity[:pos].x > TGE::Width
+                entity[:Position].x += 1 unless entity[:Position].x > TGE::Width
         end
+        $Logger.debug_warn "#{entity[:Position].to_s}"
 end
